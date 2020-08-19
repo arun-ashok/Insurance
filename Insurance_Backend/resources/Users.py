@@ -1,7 +1,7 @@
 from flask_restful import Resource
-from flask import make_response, request
+from flask import make_response, request,jsonify
 from mongoengine.errors import DoesNotExist, ValidationError
-from Insurance.documents import user_doc as Doc
+from Insurance_Backend.documents import user_doc as Doc
 #from werkzeug.security import generate_password_hash, check_password_hash
 #from Insurance.resources.validations import validate_user
 from flask_httpauth import HTTPBasicAuth
@@ -51,26 +51,28 @@ class Users(Resource):
             user1 = Doc.Users.objects(email=email).first()
             if(user1):
                 print("Already registered with this email")
-                return make_response("Already registered with this email", 400)
+                return make_response(jsonify({'message':"Already registered with this email"+str(ve),'success':0}), 400)
         except Exception as e:
             print("Exception")
             print(str(e))
 
         try:
             user1=Doc.Users(email=email,password=password)
-            if('first_name' in request_body):
-                user1.first_name = request_body['first_name']
-            if('last_name' in request_body):
-                user1.last_name=request_body['last_name']
+            if('firstname' in request_body):
+                user1.first_name = request_body['firstname']
+            if('lastname' in request_body):
+                user1.last_name=request_body['lastname']
             if('phone' in request_body):
                 user1.phone=request_body['phone']
 
             user1.save()
+            print("Saved")
+            print(user1)
 
         except ValidationError as ve:
             print(str(ve))
-            return make_response("Validation error occured:"+str(ve),404)
+            return make_response(jsonify({'message':"Validation error occured:"+str(ve),'success':0}),404)
         except Exception as e:
             print(str(e))
         print(Doc.Users.objects)
-        return make_response("User Added!!!",200)
+        return make_response(jsonify({'message':"User Added!!!",'success':1}),200)

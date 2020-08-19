@@ -1,8 +1,8 @@
 from flask_restful import Resource
 from flask import make_response, request,jsonify
 from mongoengine.errors import DoesNotExist, ValidationError
-from Insurance.documents import user_doc as Doc
-from Insurance.resources.token_jwt import encode_auth_token,decode_auth_token
+from Insurance_Backend.documents import user_doc as Doc
+from Insurance_Backend.resources.token_jwt import encode_auth_token,decode_auth_token
 from flask_httpauth import HTTPBasicAuth
 
 class UserLogin(Resource):
@@ -36,6 +36,7 @@ class UserLogin(Resource):
                     token=encode_auth_token(request_body['email'])
                     token=token.decode("utf-8")
                     print(str(token[1:]))
+                    print(user1.first_name)
                     return make_response(jsonify({'token':str(token),'success':1,'username':user1.first_name}),200)
                 else:
                     print("Wrong email/password")
