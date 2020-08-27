@@ -51,10 +51,11 @@ class Users(Resource):
             user1 = Doc.Users.objects(email=email).first()
             if(user1):
                 print("Already registered with this email")
-                return make_response(jsonify({'message':"Already registered with this email"+str(ve),'success':0}), 400)
+                return make_response(jsonify({'message':"Already registered with this email", 'success': 0}), 400)
         except Exception as e:
             print("Exception")
             print(str(e))
+            return make_response(jsonify({'message': "Already registered with this email", 'success': 0}), 400)
 
         try:
             user1=Doc.Users(email=email,password=password)

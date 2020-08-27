@@ -3,6 +3,7 @@ from mongoengine import Document, StringField, EmailField, IntField
 
 class Form(Document):
     email=EmailField(required=True)
+    company_email=EmailField(required=True)
     a1=StringField(required=True)
     a2=StringField(required=True)
     a3=StringField(required=True)

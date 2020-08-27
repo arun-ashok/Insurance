@@ -37,7 +37,7 @@ class UserLogin(Resource):
                     token=token.decode("utf-8")
                     print(str(token[1:]))
                     print(user1.first_name)
-                    return make_response(jsonify({'token':str(token),'success':1,'username':user1.first_name}),200)
+                    return make_response(jsonify({'token':str(token),'success':1,'username':user1.first_name,'email':request_body['email']}),200)
                 else:
                     print("Wrong email/password")
                     return make_response(jsonify({'message':'Wrong email/password','success':0,}), 404)

@@ -19,8 +19,9 @@ class CompanyForm(Resource):
         request_body = request.get_json()
         print(request_body)
         email = request_body['email']
+        company_email=request_body['company_email']
         try :
-            company1 = Form_Doc.Form.objects(email=email).first()
+            company1 = Form_Doc.Form.objects(email=email,company_email=company_email).first()
             a1 = request_body['a1']
             a2=request_body['a2']
             a3=request_body['a3']
@@ -56,7 +57,7 @@ class CompanyForm(Resource):
                 return make_response(jsonify({'message':'Form already exists','success':0}),401)
 
             else:
-                form1 = Form_Doc.Form(email=email,a1=a1,a2=a2,a3=a3,a4=a4,a5=a5,a6=a6,a7=a7,a8=a8,a9=a9,
+                form1 = Form_Doc.Form(email=email,company_email=company_email,a1=a1,a2=a2,a3=a3,a4=a4,a5=a5,a6=a6,a7=a7,a8=a8,a9=a9,
                                                a10=a10,a11=a11,a12=a12,a13=a13,a14=a14,a15=a15,a16=a16,a17=a17,a18=a18,
                                                a19=a19,a20=a20,a21=a21,a22=a22,b1=b1,b2=b2,b3=b3,b4=b4,b5=b5,b6=b6,b7=b7,b8=b8)
                 form1.save()
